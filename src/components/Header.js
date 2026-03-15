@@ -319,7 +319,7 @@ const Header = () => {
             </Link>
 
             <nav className="hidden md:flex items-center gap-8">
-              <Link to="/community" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">Community</Link>
+              <Link to="/producer/dashboard" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">Dashboard</Link>
               <Link to="/events" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">Events</Link>
               <Link to="/shop" className="text-sm font-medium text-slate-400 hover:text-emerald-400 transition-colors">Impact Tracker</Link>
             </nav>

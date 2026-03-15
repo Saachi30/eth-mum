@@ -39,20 +39,20 @@ const App = () => {
             {/* Protected Routes based on Role */}
             <Route 
               path="/producer/dashboard" 
-              element={account && role === 'PRODUCER' ? <ProducerDashboard /> : <Navigate to="/login" />} 
+              element={<ProducerDashboard />} 
             />
             <Route 
               path="/producer/profile" 
-              element={account && role === 'PRODUCER' ? <ProducerProfile /> : <Navigate to="/login" />} 
+              element={<ProducerProfile />} 
             />
             
             <Route 
               path="/consumer/dashboard" 
-              element={account && role === 'BUYER' ? <ConsumerDashboard /> : <Navigate to="/login" />} 
+              element={<ConsumerDashboard />} 
             />
             <Route 
               path="/consumer/profile" 
-              element={account && role === 'BUYER' ? <ConsumerProfile /> : <Navigate to="/login" />} 
+              element={<ConsumerProfile />} 
             />
 
             <Route path="/community" element={<Community />} />
