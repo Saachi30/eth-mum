@@ -1,15 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { ReclaimProofRequest } from '@reclaimprotocol/js-sdk';
 import { ethers } from 'ethers';
 import Tesseract from 'tesseract.js';
 import { toast } from 'react-toastify';
-import { Shield, Zap, Upload, CheckCircle, Loader2, QrCode } from 'lucide-react';
+import { Shield, Zap, Upload, CheckCircle, Loader2 } from 'lucide-react';
 
 const CombinedEnergyVerifier = ({ contract }) => {
-  const [url, setUrl] = useState('');
   const [requestUrl, setRequestUrl] = useState('');
   const [verificationData, setVerificationData] = useState(null);
-  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isMinting, setIsMinting] = useState(false);
   const [ocrResult, setOcrResult] = useState(null);

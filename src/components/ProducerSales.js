@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { History, TrendingUp, Calendar, Zap, ShieldCheck, Loader2, ExternalLink } from 'lucide-react';
-import { ethers } from 'ethers';
+import React, { useState, useEffect, useCallback } from 'react';
+import { TrendingUp, Calendar, Zap, ShieldCheck, Loader2, ExternalLink } from 'lucide-react';
 import { getFileverseUrl } from '../utils/fileverseHelper';
 import { toast } from 'react-toastify';
 
@@ -8,7 +7,7 @@ const ProducerSales = ({ contract, account }) => {
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     if (!contract || !account) return;
     try {
       setLoading(true);
@@ -28,11 +27,11 @@ const ProducerSales = ({ contract, account }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [contract, account]);
 
   useEffect(() => {
     fetchHistory();
-  }, [contract, account]);
+  }, [fetchHistory]);
 
   return (
     <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">

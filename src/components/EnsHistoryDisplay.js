@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Globe, Loader2, Calendar, Zap, Tag, ShoppingCart, RefreshCw } from 'lucide-react';
+import { Globe, Loader2, Calendar, Tag, ShoppingCart, RefreshCw } from 'lucide-react';
 import { getEnsTextRecord } from '../utils/ensHelper';
 
 const EnsHistoryDisplay = ({ ensName }) => {

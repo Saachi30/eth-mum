@@ -3,8 +3,6 @@ import { Star, Heart, ShoppingCart, Tag } from 'lucide-react';
 import productsData from './amazon-products.json';
 
 const ShoppingTracker = () => {
-  const [hoveredId, setHoveredId] = useState(null);
-
   const RatingStars = ({ rating }) => {
     if (rating === 'N/A') return <span className="text-gray-400">No Rating</span>;
     

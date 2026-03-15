@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Wallet, LogOut, LayoutDashboard, Globe, Shield, UserPlus, Loader2, X, Building2, User, Check, Zap, MapPin, Settings2, ChevronDown, PlusCircle, RefreshCw } from 'lucide-react';
+import { Wallet, LogOut, LayoutDashboard, Shield, UserPlus, Loader2, X, Building2, User, Check, Settings2, ChevronDown, PlusCircle, RefreshCw } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { ethers } from 'ethers';
 import { useMQTTContext } from '../context/MQTTContext';
 
 const Header = () => {
-  const { account, ensName, role, connectWallet, logout, contract, updateUserInfo, switchNetwork, BASE_CHAIN_ID, userInfo } = useAuth();
+  const { account, ensName, role, connectWallet, logout, contract, updateUserInfo, switchNetwork, BASE_CHAIN_ID } = useAuth();
   const { connected } = useMQTTContext();
   const navigate = useNavigate();
   const [isRegistering, setIsRegistering] = useState(false);
@@ -34,13 +34,7 @@ const Header = () => {
       "function setOwner(bytes32 node, address owner) external",
       "function owner(bytes32 node) view returns (address)",
   ];
-  const RESOLVER_ABI = [
-      "function setAddr(bytes32 node, address addr) external",
-      "function setText(bytes32 node, string key, string value) external",
-      "function multicall(bytes[] calldata data) external returns (bytes[] memory)"
-  ];
-
-  const handleSyncENSRecords = async () => {
+  const handleSyncENSRecords = useCallback(async () => {
     if (!ensName || !account) {
         toast.warning("No ENS identity linked to sync.");
         return;
@@ -134,7 +128,7 @@ const Header = () => {
     } finally {
         setIsSyncing(false);
     }
-  };
+  }, [account, ensName, role]);
 
   const handleDashboard = () => {
     setShowDropdown(false);
@@ -169,7 +163,7 @@ const Header = () => {
         }
     };
     resumeSync();
-  }, [account]);
+  }, [account, handleSyncENSRecords]);
 
   const handleNextStep = () => {
       if (!formData.label) {
@@ -205,10 +199,6 @@ const Header = () => {
             "function setOwner(bytes32 node, address owner) external",
             "function owner(bytes32 node) view returns (address)",
         ];
-        const RESOLVER_ABI = [
-            "function setAddr(bytes32 node, address addr) external",
-            "function setText(bytes32 node, string key, string value) external",
-        ];
 
         const sepoliaProvider = new ethers.providers.JsonRpcProvider(
             process.env.REACT_APP_ETH_SEPOLIA_RPC || "https://ethereum-sepolia.publicnode.com"
@@ -220,7 +210,10 @@ const Header = () => {
         );
 
         const registry = new ethers.Contract(ENS_REGISTRY, REGISTRY_ABI, ownerWallet);
-        const resolver = new ethers.Contract(PUBLIC_RESOLVER, RESOLVER_ABI, ownerWallet);
+        const resolver = new ethers.Contract(PUBLIC_RESOLVER, [
+            "function setAddr(bytes32 node, address addr) external",
+            "function setText(bytes32 node, string key, string value) external",
+        ], ownerWallet);
 
         const PARENT_NODE = ethers.utils.namehash("rec.eth");
         const labelHash   = ethers.utils.keccak256(ethers.utils.toUtf8Bytes(label));

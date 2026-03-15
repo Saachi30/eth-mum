@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldCheck, Zap, Users, ArrowRight, Shield, Database, Lock, Activity } from 'lucide-react';
+import { Users, ArrowRight, Shield, Database, Lock } from 'lucide-react';
 import { useMQTTContext } from '../context/MQTTContext';
 
 const Home = () => {
   const navigate = useNavigate();
   const { account, connectWallet } = useAuth();
-  const { connected, publish } = useMQTTContext();
+  const { publish } = useMQTTContext();
 
   const handleGetStarted = async () => {
     if (!account) {

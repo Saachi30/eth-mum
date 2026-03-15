@@ -55,7 +55,7 @@ export function useMQTT({ brokerUrl, options, topics }) {
         clientRef.current = null;
       }
     };
-  }, []); 
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const publish = (topic, message) => {
     if (clientRef.current && clientRef.current.connected) {

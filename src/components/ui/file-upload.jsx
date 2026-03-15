@@ -16,15 +16,6 @@ const mainVariant = {
   },
 };
 
-const secondaryVariant = {
-  initial: {
-    opacity: 0,
-  },
-  animate: {
-    opacity: 1,
-  },
-};
-
 export const FileUpload = ({ onChange }) => {
     const [files, setFiles] = useState([]);
     const fileInputRef = useRef(null);

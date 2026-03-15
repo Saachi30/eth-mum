@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 const ChatComponent = () => {
   const { userId } = useParams();
   const navigate = useNavigate();
-  const { account, ensName } = useAuth();
+  const { account } = useAuth();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
 

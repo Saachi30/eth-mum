@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Award, ShieldCheck, Trophy, Users, Zap, TrendingUp, Search } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { ShieldCheck, Trophy, Users, Search } from 'lucide-react';
 
 const Community = () => {
   const { contract, account } = useAuth();
   const [leaderboard, setLeaderboard] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // Since the contract leaderboard is private, we simulate the top participants 
   // for the demo, but in a real app we'd fetch from an indexer or events.
-  const fetchLeaderboard = async () => {
-    setLoading(true);
+  const fetchLeaderboard = useCallback(async () => {
     try {
       // Dummy data for top performers
       const demoData = [
@@ -37,14 +34,12 @@ const Community = () => {
       }
     } catch (e) {
       console.error(e);
-    } finally {
-      setLoading(false);
     }
-  };
+  }, [contract, account]);
 
   useEffect(() => {
     fetchLeaderboard();
-  }, [contract, account]);
+  }, [fetchLeaderboard]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-12">

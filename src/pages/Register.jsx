@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Shield, User, Building2, Check, ArrowRight, Loader2, UserPlus } from 'lucide-react';
+import { User, Building2, Check, Loader2, UserPlus } from 'lucide-react';
 import { toast } from 'react-toastify';
 
 const Register = () => {

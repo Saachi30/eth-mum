@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Calendar, Users, PlusCircle, Sun, Wind, BookOpen, Upload, ExternalLink, FileText } from 'lucide-react';
 import { Button } from '@mui/material';
 import emailjs from '@emailjs/browser';
-import QRCode from 'qrcode';
 import img from '../assets/Untitled.png'
 import { uploadRawFileToFileverse, getFileverseUrl } from '../utils/fileverseHelper';
 import { FileUpload } from './ui/file-upload';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { ShieldCheck, Zap, Wind, Droplets, Flame } from 'lucide-react';
 
 const RECBalance = ({ contract, account }) => {
@@ -9,7 +9,7 @@ const RECBalance = ({ contract, account }) => {
     biomass: '0'
   });
 
-  const fetchBalances = async () => {
+  const fetchBalances = useCallback(async () => {
     if (!contract || !account) return;
     try {
       const types = ['solar', 'wind', 'hydro', 'biomass'];
@@ -22,13 +22,13 @@ const RECBalance = ({ contract, account }) => {
     } catch (e) {
       console.error(e);
     }
-  };
+  }, [contract, account]);
 
   useEffect(() => {
     fetchBalances();
     const interval = setInterval(fetchBalances, 15000);
     return () => clearInterval(interval);
-  }, [contract, account]);
+  }, [fetchBalances]);
 
   const cards = [
     { type: 'Solar', value: balances.solar, icon: Zap, color: 'text-amber-400', bg: 'bg-amber-400/10' },

@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAuth } from "../../context/AuthContext";
-import RECBalance from "../../components/RECBalance";
 import Listings from "../../components/Listings";
 import BuyerHistory from "../../components/BuyerHistory";
-import { ShoppingBag, LayoutDashboard, History, Leaf, TrendingDown, ShieldCheck } from "lucide-react";
+import { ShoppingBag, History, Leaf, TrendingDown, ShieldCheck } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { toast } from 'react-toastify';
 
 const ConsumerDashboard = () => {
   const { account, contract, ensName } = useAuth();
@@ -13,7 +11,7 @@ const ConsumerDashboard = () => {
   const [dummyCredits, setDummyCredits] = useState('0');
   const [greenPoints, setGreenPoints] = useState('0');
 
-  const fetchBalances = async () => {
+  const fetchBalances = useCallback(async () => {
     if (contract && account) {
       try {
         const credits = await contract.dummyCredits(account);
@@ -24,13 +22,13 @@ const ConsumerDashboard = () => {
         console.error(e);
       }
     }
-  };
+  }, [contract, account]);
 
   useEffect(() => {
     fetchBalances();
     const interval = setInterval(fetchBalances, 10000);
     return () => clearInterval(interval);
-  }, [contract, account]);
+  }, [fetchBalances]);
 
   const tabs = [
     { id: 'marketplace', label: 'Marketplace', icon: ShoppingBag },

@@ -5,7 +5,7 @@ import CombinedEnergyVerifier from '../../components/CombinedEnergyVerifier';
 import ListTokensForm from '../../components/ListTokens';
 import ActiveListings from '../../components/ActiveListings';
 import ProducerSales from '../../components/ProducerSales';
-import { Zap, LayoutDashboard, List, History, ShieldCheck, TrendingUp } from 'lucide-react';
+import { LayoutDashboard, List, History, ShieldCheck, TrendingUp } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ProducerDashboard = () => {

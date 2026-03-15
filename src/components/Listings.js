@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { ShoppingCart, Tag, MapPin, Zap, ShieldCheck, Loader2, Search, Sparkles, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -19,7 +19,7 @@ const Listings = ({ contract, account }) => {
   });
   const [matches, setMatches] = useState([]);
 
-  const fetchListings = async () => {
+  const fetchListings = useCallback(async () => {
     if (!contract) return;
     try {
       setLoading(true);
@@ -39,11 +39,11 @@ const Listings = ({ contract, account }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [contract]);
 
   useEffect(() => {
     fetchListings();
-  }, [contract]);
+  }, [fetchListings]);
 
   // P2P Matching Algorithm
   const runMatchingAlgo = () => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { History, Flame, ExternalLink, Calendar, Zap, ShieldCheck, Loader2, AlertCircle, Info } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { getFileverseUrl } from '../utils/fileverseHelper';
@@ -10,7 +10,7 @@ const BuyerHistory = ({ contract, account }) => {
   // Map of energyType → { recBal, erc20Bal } for pre-flight checks
   const [balances, setBalances] = useState({});
 
-  const fetchHistory = async () => {
+  const fetchHistory = useCallback(async () => {
     if (!contract || !account) return;
     try {
       setLoading(true);
@@ -47,11 +47,11 @@ const BuyerHistory = ({ contract, account }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [contract, account]);
 
   useEffect(() => {
     fetchHistory();
-  }, [contract, account]);
+  }, [fetchHistory]);
 
   const handleRetire = async (energyType, amount) => {
     if (!contract) return;

@@ -3,10 +3,9 @@ import { ethers } from 'ethers';
 import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import {
-  FileText, Award, Upload, CheckCircle, Shield,
-  ExternalLink, Download, X, ChevronRight, Loader2, AlertCircle, Info, Globe
+  Upload, Shield, X, Loader2, Globe
 } from 'lucide-react';
-import { uploadMarkdownContent, getFileverseUrl } from '../utils/fileverseHelper';
+import { uploadMarkdownContent } from '../utils/fileverseHelper';
 import { useMQTTContext } from '../context/MQTTContext';
 import { useAuth } from '../context/AuthContext';
 import { syncActionToEns } from '../utils/ensHelper';
@@ -194,8 +193,6 @@ const BuyContractModal = ({ listing, account, contract, onClose, onSuccess }) =>
   const [preflight, setPreflight] = useState({ loading: true, registered: false, approved: false, credits: '0' });
   const [fdHash, setFdHash] = useState(null);
   const [ccHash, setCcHash] = useState(null);
-  const [fdUrl, setFdUrl] = useState(null);
-  const [ccUrl, setCcUrl] = useState(null);
   const [agreementChecked, setAgreementChecked] = useState(false);
   const [certChecked, setCertChecked] = useState(false);
   const [finalConfirmed, setFinalConfirmed] = useState(false);
@@ -238,26 +235,6 @@ const BuyContractModal = ({ listing, account, contract, onClose, onSuccess }) =>
   const agreement = useMemo(() => generateAgreementMd(listing, account, buyAmount), [listing, account, buyAmount]);
   const certificate = useMemo(() => generateCertificateMd(listing, account, buyAmount), [listing, account, buyAmount]);
 
-  const downloadMd = (content, filename) => {
-    const blob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const downloadPDF = (content, title) => {
-    const html = `<!DOCTYPE html><html><head><meta charset="utf-8"><title>${title}</title><style>body{font-family:Georgia,serif;margin:48px;color:#0f172a;line-height:1.75;font-size:14px}h1{font-size:22px;color:#064e3b;border-bottom:3px solid #10b981;padding-bottom:8px;margin-bottom:20px}h2{font-size:16px;color:#1e293b;margin-top:28px;margin-bottom:8px}table{width:100%;border-collapse:collapse;margin:16px 0;font-size:12px;page-break-inside:avoid}td,th{border:1px solid #cbd5e1;padding:8px 12px;text-align:left}th{background:#f0fdf4;font-weight:700}tr:nth-child(even) td{background:#f8fafc}code{background:#f1f5f9;padding:2px 5px;border-radius:3px;font-size:0.82em;font-family:monospace;word-break:break-all}hr{border:none;border-top:1px solid #e2e8f0;margin:20px 0}li{margin:4px 0}strong{color:#0f172a}@media print{body{margin:20px}button{display:none}}</style></head><body>${mdToHtml(content)}</body></html>`;
-    const win = window.open('', '_blank');
-    if (win) {
-      win.document.write(html);
-      win.document.close();
-      setTimeout(() => win.print(), 400);
-    }
-  };
-
   const handleUploadToFileverse = async () => {
     setUploading(true);
     try {
@@ -266,8 +243,6 @@ const BuyContractModal = ({ listing, account, contract, onClose, onSuccess }) =>
       if (fdDdocId && ccDdocId) {
         setFdHash(ethers.utils.id(fdDdocId));
         setCcHash(ethers.utils.id(ccDdocId));
-        setFdUrl(getFileverseUrl(fdDdocId));
-        setCcUrl(getFileverseUrl(ccDdocId));
         toast.success('Both documents uploaded!');
       } else {
         const ts = Date.now();

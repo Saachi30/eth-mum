@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { List, Trash2, Tag, Zap, Loader2, MapPin } from 'lucide-react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { List, Trash2, Zap, Loader2, MapPin } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useAuth } from '../context/AuthContext';
 import { syncActionToEns } from '../utils/ensHelper';
@@ -10,7 +10,7 @@ const ActiveListings = ({ contract, account }) => {
   const [loading, setLoading] = useState(true);
   const [cancellingId, setCancellingId] = useState(null);
 
-  const fetchListings = async () => {
+  const fetchListings = useCallback(async () => {
     if (!contract || !account) return;
     try {
       setLoading(true);
@@ -31,11 +31,11 @@ const ActiveListings = ({ contract, account }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [contract, account]);
 
   useEffect(() => {
     fetchListings();
-  }, [contract, account]);
+  }, [fetchListings]);
 
   const handleCancel = async (id) => {
     if (!contract) return;

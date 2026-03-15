@@ -191,7 +191,7 @@ export const AuthProvider = ({ children }) => {
                 window.ethereum.removeListener('chainChanged', handleChain);
             };
         }
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Identity Polling - ensures frontend updates even if blockchain is slow
     useEffect(() => {
