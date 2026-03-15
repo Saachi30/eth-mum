@@ -1,0 +1,29 @@
+.profile-container {
+  position: relative;
+  
+  overflow: hidden;
+}
+
+.profile-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:min-content;
+  z-index: -1; /* Ensures background is behind everything */
+}
+
+.content {
+  position: relative;
+  z-index: 1; /* Ensures content is above background */
+  /* padding: 20px; */
+  
+}
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}

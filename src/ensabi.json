@@ -1,0 +1,13 @@
+{
+  "registry": [
+    "function setSubnodeOwner(bytes32 node, bytes32 label, address owner) external returns (bytes32)",
+    "function setResolver(bytes32 node, address resolver) external",
+    "function owner(bytes32 node) external view returns (address)"
+  ],
+  "resolver": [
+    "function setAddr(bytes32 node, address addr) external",
+    "function setText(bytes32 node, string calldata key, string calldata value) external",
+    "function addr(bytes32 node) external view returns (address)",
+    "function text(bytes32 node, string calldata key) external view returns (string)"
+  ]
+}
